@@ -1,0 +1,6 @@
+------
+------ Foreign Keys
+------
+
+--ALTER TABLE  ADD CONSTRAINT _fk
+--FOREIGN KEY () REFERENCES () ON DELETE CASCADE;

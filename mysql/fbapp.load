@@ -1,6 +1,6 @@
 LOAD DATABASE  
      FROM mysql://root:f1shb8se@localhost/fbapp
-     INTO postgresql://fishbase:fishbase@pa-d6.corp.vnw.com:5432/fishbase  
+     INTO postgresql://fishbase:fishbase@pb-p1.corp.vnw.com:5432/fishbase  
  
  WITH include drop, create tables, create indexes, reset sequences  
  

@@ -47,7 +47,7 @@ fi
 rm -f log/*.log
 
 PSQL="psql -U postgres -h $DbHost -p $DbPort"
-PSQLFISHBASE="psql -U sau -h $DbHost -p $DbPort"
+PSQLFISHBASE="psql -U fishbase -h $DbHost -p $DbPort"
 RESTORE="pg_restore -h $DbHost -p $DbPort -Fc -a -j $RestoreThreadCount"
 
 ###########################################################

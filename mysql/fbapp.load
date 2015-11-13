@@ -6,7 +6,7 @@ LOAD DATABASE
  
   SET maintenance_work_mem to '128MB',  
       work_mem to '128MB',  
-      search_path to 'fbapp,public'  
+      search_path to 'fbapp'  
  
  CAST type datetime to timestamptz drop default drop not null using zero-dates-to-null,  
       type date drop not null drop default using zero-dates-to-null,  

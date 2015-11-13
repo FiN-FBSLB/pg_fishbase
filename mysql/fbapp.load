@@ -20,4 +20,7 @@ LOAD DATABASE
  -- DECODING TABLE NAMES MATCHING ~/messed/, ~/encoding/ AS utf8  
  
  BEFORE LOAD DO  
- $$ create schema if not exists fbapp; $$; 
+ $$ create schema if not exists fbapp; $$;
+
+ AFTER LOAD DO  
+ $$ select admin.grant_access(); $$;

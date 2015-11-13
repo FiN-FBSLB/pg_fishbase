@@ -2,7 +2,7 @@
 SET CurrentDir=%~dp0
 PUSHD %CurrentDir%
 
-SET DATABASE_NAME=fbapp
+SET DATABASE_NAME=fishbase
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Process command line parameter(s)
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -48,9 +48,9 @@ REM psql -h %DbHost% -p %DbPort% -d %DATABASE_NAME% -U postgres -f %SQLINPUTFILE
 REM IF ERRORLEVEL 1 GOTO ErrorLabel
 
 :InitializeMainSchema
-IF NOT EXIST data_dump/main.schema GOTO WrapUp
-ECHO Restoring main schema. Please enter password for user fishbase
-pg_restore -h %DbHost% -p %DbPort% -d %DATABASE_NAME% -Fc -a -j %RestoreThreadCount% -U fishbase data_dump/main.schema
+IF NOT EXIST data_dump/fbapp.schema GOTO WrapUp
+ECHO Restoring fbapp schema. Please enter password for user fishbase
+pg_restore -h %DbHost% -p %DbPort% -d %DATABASE_NAME% -Fc -a -j %RestoreThreadCount% -U fishbase data_dump/fbapp.schema
 IF ERRORLEVEL 1 GOTO ErrorLabel
 
 :WrapUp
@@ -58,8 +58,8 @@ IF ERRORLEVEL 1 GOTO ErrorLabel
 ECHO vacuum analyze; > rmv.sql
 
 :: Adding foreign keys
-type index_main.sql >> rmv.sql
-type foreign_key_main.sql >> rmv.sql
+type index_admin.sql >> rmv.sql
+type foreign_key_admin.sql >> rmv.sql
                                               
 :: Adding commands to refresh materialized views 
 psql -h %DbHost% -p %DbPort% -d %DATABASE_NAME% -U fishbase -t -f refresh_mv.sql >> rmv.sql 

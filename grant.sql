@@ -1,11 +1,21 @@
-CREATE OR REPLACE FUNCTION main.grant_access() RETURNS void AS
+CREATE OR REPLACE FUNCTION admin.grant_access() RETURNS void AS
 $body$
-  GRANT USAGE ON SCHEMA main TO web_fb;
-  GRANT SELECT,REFERENCES ON ALL TABLES IN SCHEMA main TO web_fb;
-  GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA main TO web_fb;
-  GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA main TO web_fb;
+DECLARE
+  sname TEXT;                         
+BEGIN
+  for sname in select ns.nspname::text
+                 from pg_user u
+                 join pg_namespace ns on (ns.nspowner = u.usesysid)
+                where u.usename = 'fishbase'
+  loop
+    execute format('grant usage on schema %s to web_fb', sname);
+    execute format('grant select,references on all tables in schema %s to web_fb', sname);
+    execute format('grant usage,select on all sequences in schema %s to web_fb', sname);
+    execute format('grant execute on all functions in schema %s to web_fb', sname);
+  end loop;
+END
 $body$
-LANGUAGE sql
+LANGUAGE plpgsql
 SECURITY DEFINER;
 
-SELECT main.grant_access();
+SELECT admin.grant_access();

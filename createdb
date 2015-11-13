@@ -1,7 +1,7 @@
 #!/bin/sh
 #set -x
 
-DATABASE_NAME=fbapp
+DATABASE_NAME=fishbase
 
 ###########################################################
 ## Function to call when error is encountered
@@ -82,9 +82,16 @@ fi
 
 STIME=$(date '+%s')
 
-if [ -f data_dump/main.schema ]; then
-  echo Restoring main schema. Please enter password for user fishbase
-  if ! $RESTORE -d ${DATABASE_NAME} -U fishbase data_dump/main.schema; then 
+if [ -f data_dump/fbapp.schema ]; then
+  echo Restoring fbapp schema. Please enter password for user fishbase
+  if ! $RESTORE -d ${DATABASE_NAME} -U fishbase data_dump/fbapp.schema; then 
+    ExitWithError
+  fi
+fi
+
+if [ -f data_dump/slbapp.schema ]; then
+  echo Restoring slbapp schema. Please enter password for user fishbase
+  if ! $RESTORE -d ${DATABASE_NAME} -U fishbase data_dump/slbapp.schema; then 
     ExitWithError
   fi
 fi
@@ -97,8 +104,8 @@ STIME=$(date '+%s')
 echo "vacuum analyze;" > rmv.sql
 
 ## Adding foreign keys
-cat index_main.sql >> rmv.sql
-cat foreign_key_main.sql >> rmv.sql
+cat index_admin.sql >> rmv.sql
+cat foreign_key_admin.sql >> rmv.sql
 
 ## Adding commands to refresh materialized views
 if ! $PSQLFISHBASE -d ${DATABASE_NAME} -f refresh_mv.sql -t >> rmv.sql; then

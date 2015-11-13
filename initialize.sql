@@ -35,21 +35,55 @@ CREATE EXTENSION postgres_fdw;
 \i initialize.sql
 \cd ..
 
+\c fishbase fishbase
+\echo
+\echo Creating Schemas...
+\echo
+--- Create a project schema (namespace) for ease of maintenance (backup)
+DROP SCHEMA IF EXISTS admin CASCADE;
+CREATE SCHEMA admin;
+
+DROP SCHEMA IF EXISTS fbapp CASCADE;
+CREATE SCHEMA fbapp;
+DROP SCHEMA IF EXISTS slbapp CASCADE;
+CREATE SCHEMA slbapp;
+
+DROP SCHEMA IF EXISTS ecomodel CASCADE;
+CREATE SCHEMA ecomodel;
+DROP SCHEMA IF EXISTS expeditions CASCADE;
+CREATE SCHEMA expeditions;
+DROP SCHEMA IF EXISTS fbapp_americas CASCADE;
+CREATE SCHEMA fbapp_americas;
+DROP SCHEMA IF EXISTS fbapp_qry CASCADE;
+CREATE SCHEMA fbapp_qry;
+DROP SCHEMA IF EXISTS fbmedia CASCADE;
+CREATE SCHEMA fbmedia;
+DROP SCHEMA IF EXISTS fbquiz CASCADE;
+CREATE SCHEMA fbquiz;
+DROP SCHEMA IF EXISTS fbquizsounds CASCADE;
+CREATE SCHEMA fbquizsounds;
+DROP SCHEMA IF EXISTS fbquizv2 CASCADE;
+CREATE SCHEMA fbquizv2;
+DROP SCHEMA IF EXISTS fbwebwrite CASCADE;
+CREATE SCHEMA fbwebwrite;
+DROP SCHEMA IF EXISTS fbwebwritev3 CASCADE;
+CREATE SCHEMA fbwebwritev3;
+DROP SCHEMA IF EXISTS fbwebwritev4 CASCADE;
+CREATE SCHEMA fbwebwritev4;
+DROP SCHEMA IF EXISTS fishwatcher CASCADE;
+CREATE SCHEMA fishwatcher;
+DROP SCHEMA IF EXISTS trophwebwrite CASCADE;
+CREATE SCHEMA trophwebwrite;
+DROP SCHEMA IF EXISTS top100 CASCADE;
+CREATE SCHEMA top100;
+
 \echo
 \echo Creating Admin DB Objects...
 \echo
-\c fbapp fishbase
---- Create a project schema (namespace) for ease of maintenance (backup)
-DROP SCHEMA IF EXISTS main CASCADE;
-CREATE SCHEMA main;
-
-\echo
-\echo Creating Main DB Objects...
-\echo
---\i table_main.sql
---\i function_main.sql
---\i mat_view_main.sql
---\i view_main.sql
---\i populate_main.sql
+--\i table_admin.sql
+--\i function_admin.sql
+--\i mat_view_admin.sql
+--\i view_admin.sql
+--\i populate_admin.sql
 
 \i grant.sql

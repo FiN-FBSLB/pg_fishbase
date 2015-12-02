@@ -9,4 +9,4 @@
 \i get_update_where_clause.sql
 \i exec.sql
 \i get_table_index.sql
-
+\i is_schema_exists.sql

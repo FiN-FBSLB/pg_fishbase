@@ -151,4 +151,5 @@ SELECT pa.pid,
        pa.state,
        pa.query
   FROM pg_stat_activity pa
- WHERE pa.state != 'idle';
+ WHERE pa.state != 'idle'
+   AND pa.pid != pg_backend_pid();

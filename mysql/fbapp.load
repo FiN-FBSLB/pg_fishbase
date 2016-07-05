@@ -1,6 +1,6 @@
 LOAD DATABASE  
-     FROM mysql://root:f1shb8se@localhost/fbapp
-     INTO postgresql://fishbase:fishbase@pb-p1.corp.vnw.com:5432/fishbase  
+     FROM mysql://<user>:<pass>@<host>/fbapp
+     INTO postgresql://fishbase:<pass>@<host>:5432/fishbase  
  
  WITH include drop, create tables, create indexes, reset sequences  
  
@@ -14,13 +14,13 @@ LOAD DATABASE
       type year to integer  
  
  -- MATERIALIZE VIEWS film_list, staff_list  
- 
  -- INCLUDING ONLY TABLE NAMES MATCHING ~/film/, 'actor'  
  -- EXCLUDING TABLE NAMES MATCHING ~<ory>  
  -- DECODING TABLE NAMES MATCHING ~/messed/, ~/encoding/ AS utf8  
  
  BEFORE LOAD DO  
- $$ create schema if not exists fbapp; $$
+ $$ drop schema if exists fbapp cascade; $$,
+ $$ create schema if not exists fbapp; $$;
 
  AFTER LOAD DO  
  $$ select admin.grant_access(); $$

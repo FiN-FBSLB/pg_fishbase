@@ -1,5 +1,5 @@
 LOAD DATABASE  
-     FROM mysql://root:f1shb8se@localhost/slbapp
+     FROM mysql://root:f1shb8se@pa-d6.corp.vnw.com/slbapp
      INTO postgresql://fishbase:fishbase@pb-p1.corp.vnw.com:5432/fishbase  
  
  WITH include drop, create tables, create indexes, reset sequences  
@@ -20,6 +20,7 @@ LOAD DATABASE
  -- DECODING TABLE NAMES MATCHING ~/messed/, ~/encoding/ AS utf8  
  
  BEFORE LOAD DO  
+ $$ drop schema if exists slbapp cascade; $$,
  $$ create schema if not exists slbapp; $$
 
  AFTER LOAD DO  

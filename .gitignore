@@ -1,0 +1,3 @@
+data_dump/*.schema
+log/
+rmv.sql

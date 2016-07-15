@@ -1,0 +1,22 @@
+LOAD DATABASE
+     FROM mysql://<mysql username>:<mysql pass>@127.0.0.1:33060/fbapp 
+     INTO postgresql://fishbase:<postgres pass>@sau-db-qa-1.ck24jacu2hmg.us-west-2.rds.amazonaws.com:5432/fishbase
+
+ WITH include drop, create tables, create indexes, reset sequences
+
+  SET maintenance_work_mem to '256MB',
+      work_mem to '128MB',
+      search_path to 'fbapp'
+
+ CAST type datetime to timestamptz drop default drop not null using zero-dates-to-null,
+      type date drop not null drop default using zero-dates-to-null,
+      -- type tinyint to boolean using tinyint-to-boolean,
+      type year to integer
+
+ BEFORE LOAD DO
+ $$ drop schema if exists fbapp cascade; $$,
+ $$ create schema if not exists fbapp; $$
+
+ AFTER LOAD DO
+ $$ select * from admin.grant_access(); $$
+; 
